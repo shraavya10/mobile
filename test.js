@@ -1,7 +1,8 @@
 var PLAY = 1;
 var END = 0;
-var gameState = PLAY;
-var Oxylevel=10;
+var SERVE=2;
+var gameState = SERVE;
+var Oxylevel=10;var score=0;
 var trex;var trexImg;
 //trex_running, trex_collided;
 var ground, invisibleGround, groundImage;
@@ -90,10 +91,13 @@ function setup() {
 function draw() {
   //trex.debug = true;
   background(backgroundImg);
-  textSize(20);
-  fill("black")
-  text("distance run in kms: "+ score,30,50);
-  text("oxygen: "+ Oxylevel,30,70);
+
+  if((touches.length > 0 || keyDown("ENTER")))  {
+    gameState=PLAY; 
+    touches = [];
+
+  }
+  
  
   
   if (gameState===PLAY){
@@ -115,6 +119,7 @@ function draw() {
     trex.collide(invisibleGround);
     spawnClouds();
     spawnObstacles();
+   // spawnFood();
   
     if(cloudsGroup.isTouching(trex)){
 
@@ -163,6 +168,38 @@ function draw() {
   
 } 
   drawSprites();
+
+  if(gameState==SERVE){
+    
+    //introSong.play();
+    textSize(28);
+    textFont('Britannic Bold');
+    fill("White");
+    text("GALACTIC SPACE RANGERS!", 350,160);
+     textSize(20);
+    text("Use space bar to Jump and escape from the asteroids",350,200);
+    text("Collect the power pellets and oxygen while you travel through space!!",350,240);
+    text("Happy travelling!! ",350,280);
+    text("Press ENTER to Start!!",450,320);
+
+}
+if(gameState==PLAY){
+ // introSong.stop();
+  textSize(28);
+  fill("white");
+  text("distance run in kms: "+ score,30,50);
+  text("oxygen: "+ Oxylevel,30,70);
+  //text("Oxygen Level : "+oxygenLevel,900,100);
+}
+if(gameState==END){
+    textSize(22);
+    //textFont('Britannic Bold');
+    fill("White");
+    text("Thanks For playing!!", 300,140);
+    text("Game developed by : P Shraavya Hande",300,360);
+}
+
+
 }
 
 function spawnClouds() {
